@@ -75,8 +75,8 @@
         <h1>Calculadora de IMC</h1>
 
         <div class="campo">
-            <label for="peso">Peso (kg):</label>
-            <input type="number" id="peso" placeholder="ejemplo: 70.5">
+            <label for="peso">Peso (libras):</label>
+            <input type="number" id="peso" placeholder="ejemplo: 155.0">
         </div>
 
         <div class="campo">
@@ -91,16 +91,19 @@
 
     <script>
         function calcularIMC() {
-            const peso = parseFloat(document.getElementById('peso').value);
+            const pesoLibras = parseFloat(document.getElementById('peso').value);
             const altura = parseFloat(document.getElementById('altura').value);
             const resultadoDiv = document.getElementById('resultado');
 
-            if (isNaN(peso) || isNaN(altura) || peso <= 0 || altura <= 0) {
+            if (isNaN(pesoLibras) || isNaN(altura) || pesoLibras <= 0 || altura <= 0) {
                 resultadoDiv.innerHTML = "Por favor, introduce valores válidos.";
                 return;
             }
+            
+            // Convertir libras a kilogramos (1 lb = 0.453592 kg)
+            const pesoKg = pesoLibras * 0.453592;
 
-            const imc = peso / (altura * altura);
+            const imc = pesoKg / (altura * altura);
             let clasificacion = "";
 
             if (imc < 18.5) {
@@ -113,7 +116,6 @@
                 clasificacion = "Obesidad";
             }
 
-            // Mostrar el resultado correctamente
             resultadoDiv.innerHTML = `Tu IMC es: <strong>${imc.toFixed(2)}</strong><br>Clasificación: <strong>${clasificacion}</strong>`;
         }
     </script>
